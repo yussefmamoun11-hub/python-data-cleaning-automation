@@ -1,0 +1,11 @@
+Customer ID,Name,Email,Phone,City,Registration Date,Status
+1001, Ahmed Hassan ,ahmed.hassan@gmail.com,01012345678,Cairo,2026-01-05,Active
+1002,Sara Ali,sara.ali@gmail,01123456789,Giza,05/01/2026,active
+1003,Mohamed Adel,,01234567890,Alexandria,2026-01-08,Active
+1004,  Youssef Mamoun,youssef.mamoun@gmail.com,010-5555-1234,Cairo,2026-01-10,ACTIVE
+1005,Mariam Said,mariam.said@gmail.com,,Giza,2026-01-12,Inactive
+1006,Omar Khaled,omar.khaled@gmail.com,01198765432,Cairo,2026-01-15,active
+1006,Omar Khaled,omar.khaled@gmail.com,01198765432,Cairo,2026-01-15,active
+1007,Menna Ali,menna.ali@gmail.com,012-333-4567,Alexandria,2026-01-18,Pending
+1008,Karim Mostafa,karim.mostafa@,01087654321,Cairo,2026-01-20,Active
+1009,Nour Ahmed,nour.ahmed@gmail.com,01012345678,,2026-01-22,active
