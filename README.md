@@ -1,217 +1,287 @@
-# Python Data Cleaning Automation
+# DataFlow — Data Cleaning & Quality Automation Platform
 
-A reusable Python automation pipeline for cleaning, validating, testing, and reporting data quality from CSV and Excel datasets.
+> A production-minded Python automation platform for cleaning, validating, profiling, and reporting on customer datasets.
 
 ## Overview
 
-This project automates common data-cleaning tasks that are frequently required before analysis, reporting, CRM imports, or business operations.
+DataFlow automates repetitive data-cleaning and quality-control workflows for CSV and Excel datasets.
 
-Instead of manually cleaning spreadsheets, the pipeline processes the dataset automatically and generates a cleaned output, validation results, quality report, and execution log.
+Instead of manually reviewing inconsistent customer data, DataFlow applies a repeatable pipeline that standardizes records, validates critical fields, removes duplicate identifiers, generates quality reports, and provides a desktop interface for non-technical users.
 
-## What It Does
+The platform is designed with a modular architecture so the data-processing engine can be reused independently from the GUI.
 
-The pipeline can:
+## Key Capabilities
 
-- Load CSV and Excel files
-- Clean column names
-- Remove unnecessary text spaces
-- Standardize status values
-- Validate email addresses
-- Normalize and validate phone numbers
-- Standardize dates
-- Remove duplicate customer records
-- Handle missing city values
-- Generate a data quality report
-- Generate execution logs
-- Run automated tests
-- Accept custom input files
-- Produce consistent cleaned output
+* CSV and XLSX input support
+* Automatic whitespace normalization
+* Status standardization
+* Email validation
+* Phone number normalization and validation
+* Date format standardization
+* Duplicate Customer ID removal
+* Missing-value handling
+* Data quality reporting
+* Structured application logging
+* Automated testing with pytest
+* Desktop GUI built with CustomTkinter
+* Original vs. cleaned dataset preview
+* Dataset profiling and quality metrics
+* Local processing for data privacy
 
-## Pipeline
+## Processing Pipeline
 
+```text
 Input Dataset
-       ?
-Data Loading
-       ?
-Data Cleaning
-       ?
-Data Validation
-       ?
+     │
+     ▼
+File Loading
+     │
+     ▼
+Schema & Text Normalization
+     │
+     ├── Email Validation
+     ├── Phone Normalization
+     ├── Phone Validation
+     ├── Date Standardization
+     └── Status Standardization
+     │
+     ▼
 Duplicate Removal
-       ?
-Missing Value Handling
-       ?
-Quality Report
-       ?
-Cleaned Dataset
-       ?
-Automated Tests
+     │
+     ▼
+Missing-Value Handling
+     │
+     ▼
+Quality Analysis
+     │
+     ├── Cleaned Dataset
+     ├── Quality Report
+     └── Pipeline Logs
+     │
+     ▼
+Final Output
+```
+
+## Architecture
+
+```text
+data/input/       → Raw datasets
+        │
+        ▼
+src/cleaner.py    → Cleaning pipeline
+src/validators.py → Field validation
+src/reporter.py   → Quality reporting
+src/main.py       → CLI pipeline orchestration
+src/gui.py        → Desktop interface
+        │
+        ├── data/output/
+        ├── reports/
+        └── logs/
+```
+
+The processing logic is intentionally separated from the presentation layer. This allows the core cleaning engine to be executed through the command line or integrated into another interface without depending on the GUI.
 
 ## Project Structure
 
+```text
 python-data-cleaning-automation/
-�
-+-- data/
-�   +-- input/
-�   �   +-- customers_january.csv
-�   +-- output/
-�
-+-- reports/
-�
-+-- logs/
-�
-+-- src/
-�   +-- __init__.py
-�   +-- main.py
-�   +-- cleaner.py
-�   +-- validators.py
-�   +-- reporter.py
-�
-+-- tests/
-�   +-- test_cleaning.py
-�
-+-- .gitignore
-+-- requirements.txt
-+-- run_pipeline.py
-+-- README.md
+│
+├── data/
+│   ├── input/
+│   └── output/
+│
+├── logs/
+│   └── pipeline.log
+│
+├── reports/
+│
+├── src/
+│   ├── cleaner.py
+│   ├── gui.py
+│   ├── main.py
+│   ├── reporter.py
+│   ├── validators.py
+│   └── __init__.py
+│
+├── tests/
+│   └── test_cleaning.py
+│
+├── .gitignore
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── run_pipeline.py
+```
 
-## Example Dataset
+## Technology Stack
 
-The included sample dataset intentionally contains common data-quality problems:
-
-- Duplicate Customer ID
-- Missing email
-- Invalid email addresses
-- Missing phone number
-- Invalid phone number
-- Inconsistent status capitalization
-- Different date formats
-- Missing city
-- Extra spaces in text fields
-
-## Example Results
-
-Original records: 10
-
-Final records: 9
-
-Duplicates removed: 1
-
-Invalid emails: 2
-
-Missing emails: 1
-
-Invalid phones: 1
-
-Missing phones: 1
-
-All automated tests: PASSED
+| Technology    | Purpose                 |
+| ------------- | ----------------------- |
+| Python 3.10+  | Core application        |
+| Pandas        | Dataset processing      |
+| OpenPyXL      | Excel file support      |
+| CustomTkinter | Desktop GUI             |
+| Pytest        | Automated testing       |
+| Logging       | Operational diagnostics |
+| Git / GitHub  | Version control         |
 
 ## Installation
 
-Clone the repository and enter the project directory.
+### 1. Clone the repository
 
-Create a virtual environment:
+```bash
+git clone https://github.com/yussefmamoun11-hub/python-data-cleaning-automation.git
+cd python-data-cleaning-automation
+```
 
-    python -m venv .venv
+### 2. Create a virtual environment
 
-Activate it on Windows:
+```powershell
+python -m venv .venv
+```
 
-    .venv\Scripts\Activate.ps1
+### 3. Activate the environment
 
-Install dependencies:
+Windows PowerShell:
 
-    pip install -r requirements.txt
+```powershell
+.venv\Scripts\Activate.ps1
+```
 
-## Run the Pipeline
+### 4. Install dependencies
 
-Run the complete automation:
+```powershell
+pip install -r requirements.txt
+```
 
-    python run_pipeline.py
+## Command-Line Usage
 
-The pipeline will:
+Place a CSV or XLSX dataset inside:
 
-1. Clean the dataset
-2. Generate the cleaned CSV
-3. Generate the quality report
-4. Generate the execution log
-5. Run automated tests
+```text
+data/input/
+```
 
-## Process a Custom File
+Run the pipeline:
 
-CSV:
+```powershell
+python run_pipeline.py
+```
 
-    python src/main.py data/input/customers_january.csv
+You can also provide a specific input file:
 
-Excel:
+```powershell
+python run_pipeline.py data/input/customers_january.csv
+```
 
-    python src/main.py data/input/customers_january.xlsx
+The pipeline generates:
 
-Supported formats:
+```text
+data/output/
+reports/
+logs/
+```
 
-- CSV
-- XLSX
+## Desktop GUI
+
+Launch the DataFlow desktop application:
+
+```powershell
+python src/gui.py
+```
+
+The GUI provides:
+
+* File selection
+* Dataset preview
+* Data profiling
+* Quality metrics
+* Processing progress
+* Quality report viewing
+* Activity logs
+* Output file access
 
 ## Testing
 
-Run the complete test suite:
+Run the complete automated test suite:
 
-    python -m pytest -v
+```powershell
+python -m pytest
+```
 
-Current test coverage includes:
+The test suite verifies core data-processing behavior including:
 
-- Output file creation
-- Row count validation
-- Duplicate Customer ID detection
-- Missing city validation
-- Email validation
-- Phone validation
+* Output generation
+* Record counts
+* Duplicate removal
+* Missing-value handling
+* Email validation
+* Phone validation
 
-## Technologies
+## Data Privacy
 
-- Python
-- Pandas
-- OpenPyXL
-- Pytest
-- Regular Expressions
-- CSV
-- Excel
-- Python Logging
+DataFlow processes datasets locally on the user's machine.
 
-## Use Cases
+Input files are not intentionally uploaded to an external service by the application.
 
-This automation can be adapted for:
+Users should still follow their organization's data-handling, access-control, and retention policies when processing sensitive information.
 
-- Customer databases
-- CRM imports
-- Sales datasets
-- Marketing lists
-- Contact databases
-- Business spreadsheets
-- Data migration
-- Reporting preparation
-- Freelance data-cleaning tasks
+## Quality Reporting
 
-## Future Improvements
+For each processed dataset, DataFlow can generate a quality report containing:
 
-Potential extensions include:
+* Original record count
+* Final record count
+* Duplicate records removed
+* Missing-value statistics
+* Invalid email count
+* Missing email count
+* Invalid phone count
+* Missing phone count
+* Processing completion status
 
-- Excel output generation
-- Multiple input files
-- Advanced validation rules
-- Configurable cleaning rules
-- HTML reports
-- Data-quality scoring
-- Web interface
-- Scheduled automation
-- Database integration
+## Engineering Principles
 
-## Author
+The project follows several production-oriented principles:
 
-Yussef Mamoun
+* **Modularity** — processing, validation, reporting, and UI are separated.
+* **Repeatability** — the same dataset can be processed through a consistent pipeline.
+* **Observability** — pipeline activity is recorded through structured logs.
+* **Testability** — core behavior is covered by automated tests.
+* **Privacy by design** — processing occurs locally.
+* **Maintainability** — functionality is organized into focused modules.
 
-Cybersecurity Student | Python Automation | Data Processing
+## Current Scope
+
+DataFlow currently focuses on structured customer datasets and supports common data-quality operations.
+
+It is not intended to replace enterprise-grade data-governance platforms or large-scale distributed data-processing systems.
+
+## Roadmap
+
+Potential future improvements include:
+
+* Configurable validation rules
+* Schema detection
+* More advanced data-quality metrics
+* Batch processing
+* Export to additional formats
+* Configuration files
+* Improved test coverage
+* CI/CD automation
+* Packaged Windows executable
+* Plugin-based validation rules
 
 ## License
 
-This project is intended for educational, portfolio, and freelance automation use.
+This project is licensed under the MIT License. See `LICENSE` for details.
+
+## Author
+
+**Yussef Mamoun**
+
+Cybersecurity undergraduate interested in security engineering, automation, and practical software solutions.
+
+GitHub: `yussefmamoun11-hub`
